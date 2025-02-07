@@ -10,10 +10,10 @@ import com.gamewerks.blocky.engine.PieceKind;
 public class Loader {
     private static boolean[][] readRotation(Scanner in) {
         boolean[][] rotation = new boolean[4][4];
-        for (int row = 3; row >= 0; row--) {
+        for (int row = 0; row < 4; row++) {
             String line = in.nextLine();
-            for (int col = 0; col < 5; col++) {
-                rotation[row][col] = line.charAt(col) == 'x';
+            for (int col = 0; col < 4; col++) {
+                rotation[4-col][row] = line.charAt(col) == 'x';
             }
         }
         return rotation;
