@@ -41,12 +41,20 @@ public class Piece {
         return ((boolean[][][]) ROTATION_DATA.get(kind))[orientation];
     }
     
-    public void rotate(boolean dir) {
+    public void rotate(boolean dir, Board b) {
+        int possible = this.orientation;
         if (dir) {
-            orientation = (orientation + 1) % 4;
+            possible = (possible + 1) % 4;
         } else {
-            int k = orientation - 1;
-            orientation = k < 0 ? 3 : k;
+            int k = possible - 1;
+            possible = k < 0 ? 3 : k;
         }
+        Piece temp = new Piece(kind, pos);
+        temp.orientation = possible; 
+        if (b.collides(temp)) {
+
+        }else {
+                this.orientation = possible;
+            }
     }
 }
