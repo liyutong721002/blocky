@@ -29,6 +29,10 @@ public class Piece {
         this.pos = pos;
     }
     
+     public PieceKind getKind() {
+        return kind;
+    }
+     
     public Position getPosition() {
         return pos;
     }
