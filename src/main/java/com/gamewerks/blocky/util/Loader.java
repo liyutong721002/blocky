@@ -13,7 +13,7 @@ public class Loader {
         for (int row = 0; row < 4; row++) {
             String line = in.nextLine();
             for (int col = 0; col < 4; col++) {
-                rotation[4-col][row] = line.charAt(col) == 'x';
+                rotation[row][col] = line.charAt(col) == 'x';
             }
         }
         return rotation;
