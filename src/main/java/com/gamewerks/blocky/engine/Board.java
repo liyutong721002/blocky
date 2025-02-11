@@ -14,7 +14,7 @@ public class Board {
     }
     
     public boolean isValidPosition(int row, int col) {
-        return row >= 0 && row <= well.length && col >= 0 && col <= well[0].length;
+        return row >= 0 && row < Constants.BOARD_HEIGHT && col >= 0 && col < Constants.BOARD_WIDTH;
     }
     
     public boolean collides(Piece p) {
@@ -28,8 +28,10 @@ public class Board {
                 int wellCol = col + pos.col;
                 if (layout[row][col]) {
                     if (!isValidPosition(wellRow, wellCol)) {
+                        System.out.println("Collision: Out of bounds at " + wellRow + ", " + wellCol);
                         return true;
                     } else if (well[wellRow][wellCol]) {
+                        System.out.println("Collision: Block already at " + wellRow + ", " + wellCol);
                         return true;
                     }
                 }

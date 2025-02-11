@@ -10,6 +10,7 @@ public class BlockyGame {
     private Board board;
     private Piece activePiece;
     private Direction movement;
+    private RandomBlock rand;
     
     private int lockCounter;
     
@@ -17,13 +18,15 @@ public class BlockyGame {
         board = new Board();
         movement = Direction.NONE;
         lockCounter = 0;
+        rand = new RandomBlock();
         trySpawnBlock();
     }
     
     private void trySpawnBlock() {
         if (activePiece == null) {
-            Random random = new Random();
-            activePiece = new Piece(PieceKind.ALL[random.nextInt(6)], new Position(Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2));
+            PieceKind newPiece = rand.next();
+            System.out.println("Piece: " + newPiece);
+            activePiece = new Piece(newPiece, new Position(Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2));
             if (board.collides(activePiece)) {
                 System.exit(0);
             }
@@ -52,13 +55,18 @@ public class BlockyGame {
     
     private void processGravity() {
         Position nextPos = activePiece.getPosition().add(-1, 0);
+        //activePiece.moveTo(nextPos);
+        System.out.println("Trying to move to: " + nextPos.row);
         if (!board.collides(activePiece.getLayout(), nextPos)) {
+            System.out.println("Piece moving to: " + nextPos.row);
             lockCounter = 0;
             activePiece.moveTo(nextPos);
         } else {
+            System.out.println("Piece stopped at: " + activePiece.getPosition().row);
             if (lockCounter < LOCK_DELAY_LIMIT) {
                 lockCounter += 1;
             } else {
+                System.out.println("Piece locked at: " + activePiece.getPosition().row);
                 board.addToWell(activePiece);
                 lockCounter = 0;
                 activePiece = null;
